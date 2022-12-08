@@ -14,4 +14,4 @@ def make_gpt_resp(params: schemas.TextGPT) -> str:
             max_tokens=params.tokens,
             n=params.quantity
         )
-    return '\n\n'.join([choice.text.strip() for choice in response.choices])
+    return '||'.join([choice.text.strip() for choice in response.choices])
