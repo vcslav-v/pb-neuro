@@ -4,6 +4,7 @@ import secrets
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pb_neuro.api import service
+from pb_neuro import schemas
 
 router = APIRouter()
 security = HTTPBasic()
@@ -24,11 +25,9 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials.username
 
 
-@router.get('/get_text')
+@router.post('/get_text')
 def get_text(
-    promt: str,
-    tokens: int = 200,
-    n: int = 1,
+    params: schemas.TextGPT,
     _: str = Depends(get_current_username)
 ) -> str:
-    return service.make_gpt_resp(promt, tokens, n)
+    return service.make_gpt_resp(params)
